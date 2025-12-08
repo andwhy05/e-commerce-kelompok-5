@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -23,6 +23,42 @@
             </div>
 
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                {{ $slot }}
+            </div>
+        </div>
+    </body>
+</html> --}}
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>{{ config('app.name', 'SweetCake Shop') }}</title>
+
+        
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=inter:400,600,800&display=swap" rel="stylesheet" />
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <!-- Background Gradasi Lembut (nuansa kue krim/es krim) -->
+    <body class="font-['Inter'] text-gray-900 antialiased">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center p-6 sm:pt-0
+                     bg-pink-200 via-red-200 ">
+            
+            <!-- Logo bawaan Laravel -->
+            <div>
+                <a href="/">
+                    <x-application-logo class="w-20 h-20 fill-current text-pink-500" />
+                </a>
+            </div>
+
+            <!-- Kontainer untuk konten slot (halaman login/register) -->
+            <div class="w-full sm:max-w-md">
                 {{ $slot }}
             </div>
         </div>
