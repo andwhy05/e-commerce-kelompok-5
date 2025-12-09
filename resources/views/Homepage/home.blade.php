@@ -55,9 +55,10 @@
 
             <!-- Icons (Right) -->
             <a href="{{ route('profile')}}">
-            <div class="flex items-center text-pink-600 text-2xl space-x-6">
-                <i class="fas fa-user hover:text-pink-400 cursor-pointer transition"></i>
-            </div>
+                <div class="flex items-center text-pink-600 text-2xl space-x-6">
+                    <i class="fas fa-user hover:text-pink-400 cursor-pointer transition"></i>
+                </div>
+            </a>
 
             <!-- MOBILE ICON -->
             <div class="md:hidden text-2xl text-pink-700">
@@ -66,16 +67,14 @@
         </div>
     </header>
 
-
-    <!-- HERO SECTION -->
     <section id="home" class="pt-32 pb-20">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
 
-            <div>
-                <h1 class="text-5xl md:text-6xl font-bold text-pink-700 leading-tight">
+            <div class="text-left">
+                <h1 class="text-5xl md:text-6xl font-bold text-pink-700 leading-tight text-left">
                     Fresh <span class="text-pink-500">Cakes</span> Everyday
                 </h1>
-                <p class="text-pink-700 mt-4 text-lg leading-relaxed">
+                <p class="text-pink-700 mt-4 text-lg leading-relaxed text-left">
                     SweetCake menyediakan kue-kue lembut dan manis yang dibuat setiap hari.
                     Dari aroma hingga rasa, semuanya dibuat untuk membuat harimu lebih ceria.
                 </p>
@@ -85,9 +84,10 @@
                 </a>
             </div>
 
-            <div>
+            {{-- <div>
                 <img src="https://pin.it/7m08oN0db.png" class="w-full drop-shadow-xl">
-            </div>
+            </div> --}}
+
         </div>
     </section>
 
