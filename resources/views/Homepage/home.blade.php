@@ -91,127 +91,51 @@
                 Explore Products
             </a>
         </div>
+        <img src="{{ asset('image/cake 1.jpg') }}"
+     style="width: 300px; height: 200px; object-fit: cover;"
+     class="rounded-xl drop-shadow-xl">
+    </div>
 
-        <div>
-            <img src="https://via.placeholder.com/500x400?text=Sweet+Cake"
-                 class="w-full drop-shadow-xl rounded-xl">
-        </div>
 
     </div>
 </section>
 
-<!-- ================= ALL PRODUCTS ================= -->
 <!-- ================= ALL PRODUCTS ================= -->
 <section id="products" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-
-        <h2 class="text-center text-4xl font-bold text-pink-700">
-            All <span class="text-pink-500">Products</span>
-        </h2>
-        <p class="text-center text-pink-600 mt-2">
-            Fresh, Sweet, and Made With Love
-        </p>
-
-        <div class="grid gap-10 mt-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            @foreach($products as $product)
-                <div class="bg-pink-50 rounded-2xl shadow-md hover:shadow-xl transition p-4">
-
-                    <!-- PRODUCT IMAGE -->
-                    <img 
-                        src="{{ asset('storage/' . $product->thumbnail) }}" 
-                        alt="{{ $product->name }}"
-                        class="h-44 w-full object-cover rounded-xl"
-                    >
-
-                    <!-- PRODUCT INFO -->
-                    <h3 class="text-xl font-semibold text-pink-800 mt-4">
-                        {{ $product->name }}
-                    </h3>
-
-                    <p class="text-pink-600 text-sm mt-1 line-clamp-2">
-                        {{ $product->description }}
-                    </p>
-
-                    <p class="text-pink-700 font-bold mt-2">
-                        Rp {{ number_format($product->price, 0, ',', '.') }}
-                    </p>
-
-                    <!-- ACTION -->
-                    <div class="mt-4 flex gap-2">
-                        <a href="{{ route('products.show', $product->id) }}"
-                           class="w-1/2 text-center border border-pink-400 text-pink-500 py-2 rounded-full hover:bg-pink-100 transition">
-                            Detail
-                        </a>
-
-                        <form action="{{ route('cart.add', $product->id) }}" method="POST" class="w-1/2">
-                            @csrf
-                            <button 
-                                type="submit"
-                                class="w-full bg-pink-500 text-white py-2 rounded-full hover:bg-pink-600 transition">
-                                Add
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
-            @empty
-                <p class="col-span-4 text-center text-gray-400">
-                    Produk belum tersedia
-                </p>
-            @endforelse
-        </div>
-
-    </div>
-</section>
-
-<!-- ================= CATEGORIES ================= -->
-<section id="categories" class="py-20 bg-pink-50">
     <h2 class="text-center text-4xl font-bold text-pink-700">
-        Product <span class="text-pink-500">Categories</span>
+        Kategori <span class="text-pink-500">Kue</span>
     </h2>
 
-    <div class="max-w-7xl mx-auto px-6 mt-14 space-y-16">
-        @foreach($categories as $category)
-        <div>
-            <h3 class="text-3xl font-bold text-pink-700 mb-6">
-                {{ $category->name }}
-            </h3>
+    <p class="text-center text-pink-600 mt-2">
+        Fresh, Sweet, and Made With Love
+    </p>
 
-            <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                @foreach($category->products as $product)
-                <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition">
-                    <img src="{{ asset('storage/'.$product->image) }}"
-                         class="h-40 w-full object-cover rounded-xl">
-
-                    <h4 class="text-lg font-semibold text-pink-800 mt-3">
-                        {{ $product->name }}
-                    </h4>
-
-                    <p class="text-pink-600 text-sm h-12">
-                        {{ Str::limit($product->description, 60) }}
-                    </p>
-
-                    <p class="font-bold text-pink-700 mt-2">
-                        Rp {{ number_format($product->price, 0, ',', '.') }}
-                    </p>
-                </div>
-                @endforeach
-            </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
+            <img src="{{ asset('image/cake 2.jpg') }}" class="w-full h-40 object-cover rounded-lg mb-3">
+            <h3 class="font-semibold">Birthday Cake</h3>
         </div>
-        @endforeach
+        <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
+            <img src="{{ asset('image/Cookies 1.jpeg') }}" class="w-full h-40 object-cover rounded-lg mb-3">
+            <h3 class="font-semibold">Cookies</h3>
+        </div>
+        <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
+            <img src="{{ asset('image/Cupcake 1.jpeg') }}" class="w-full h-40 object-cover rounded-lg mb-3">
+            <h3 class="font-semibold">Cupcake</h3>
+        </div>
+        <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
+            <img src="{{ asset('image/Pastry 1.jpeg') }}" class="w-full h-40 object-cover rounded-lg mb-3">
+            <h3 class="font-semibold">Pastry</h3>
+    </div>
     </div>
 </section>
-
 <!-- ================= FOOTER ================= -->
-<footer class="bg-pink-200 py-10">
-    <div class="text-center">
-        <h1 class="text-3xl font-bold text-pink-700">SweetCake</h1>
-        <p class="text-pink-700 mt-2">Made with love & sweetness 💕</p>
-        <p class="mt-6 text-pink-800">
-            &copy; {{ date('Y') }} SweetCake — All Rights Reserved
-        </p>
+<footer class="w-full bg-pink-200 py-10 mt-16">
+    <div class="max-w-6xl mx-auto text-center">
+        <h1 class="text-3xl font-bold text-pink-700">SweetCake.</h1>
+        <p class="text-pink-700 mt-2">Made with love and sweetness</p>
+        <p class="mt-6 text-pink-800">&copy; 2025 SweetCake — All Rights Reserved.</p>
     </div>
 </footer>
-
 </body>
 </html>

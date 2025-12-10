@@ -3,28 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\ProductImage;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function storeImage(Request $request, Product $product)
-{
-    $request->validate([
-        'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-    ]);
+    public function index(Request $request)
+    {
+        $query = Product::query();
 
-    // Simpan file ke storage
-    $path = $request->file('image')->store('products', 'public');
+        // Search
+        if ($request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
 
-    // Simpan ke database
-    ProductImage::create([
-        'product_id'   => $product->id,
-        'image'        => $path,
-        'is_thumbnail' => $request->has('is_thumbnail'),
-    ]);
+        $products = $query->with('images','category')->get();
 
-    return back()->with('success', 'Gambar berhasil diupload');
-}
+        return view('products.index', compact('products'));
+    }
+    public function byCategory($slug)
+    {
+        $category = ProductCategory::where('slug', $slug)->firstOrFail();
+        $products = Product::where('category_id', $category->id)->with('images')->get();
+        $products = Product::where('category_id', $category->id)->get();
+
+        return view('products.by-category', compact('category', 'products'));
+        return view('products.by-category', compact('category','products'));
+    }
+
+    public function detail($id)
+    {
+        $product = Product::with(['images', 'category', 'reviews'])->findOrFail($id);
+
+        return view('products.detail', compact('product'));
+    }
 }
