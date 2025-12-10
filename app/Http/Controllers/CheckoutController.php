@@ -40,4 +40,4 @@ class CheckoutController extends Controller
 
         return redirect()->route('home')->with('success', 'Pembelian berhasil!');
     }
-}
+} 

@@ -6,7 +6,7 @@
     <img src="{{ asset('image/'.$product->images[0]->image_path) }}"
          class="w-full h-96 object-cover rounded-xl shadow">
 
-    <div>
+    <div> 
         <h1 class="text-4xl font-bold text-pink-700">{{ $product->name }}</h1>
 
         <p class="text-lg text-gray-700 mt-3">
