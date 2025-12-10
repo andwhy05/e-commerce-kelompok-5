@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Seller\SellerDashboardController;
 use App\Http\Controllers\Seller\ProductCategoryController;
 use App\Http\Controllers\Seller\ProductController;
+use App\Http\Controllers\Seller\OrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,17 +38,39 @@ Route::post('/cart/add/{id}', function() {
 })->name('cart.add');
 
 // tambahan fitur :
-// Route::get('login', [AuthController::class, 'login']);
-// Route::get('register', [AuthController::class, 'login']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// tambah fitur : seller baru
-Route::middleware(['auth', 'role:seller'])->prefix('seller')->name('seller.')->group(function () {
-    Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('dashboard');
-    Route::resource('categories', ProductCategoryController::class)->except(['show']);
-    Route::resource('products', ProductController::class); 
+// tambah fitur untuk Seller
+Route::prefix('seller')->name('seller.')->group(function () {
+    
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('seller.dashboard');
+    })->name('dashboard');
+
+    // Registrasi Toko
+    Route::get('/register', function () {
+        return view('seller.register');
+    })->name('register');
+
+    // Manajemen Produk
+    Route::get('/products', function () {
+        return view('seller.products.index');
+    })->name('products.index');
 
 });
+
+//tambah fitur : seller order
+Route::middleware(['auth', 'seller'])->prefix('seller')->name('seller.')->group(function () {
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+    Route::post('/orders/{id}/update-resi', [OrderController::class, 'updateResi'])->name('orders.update-resi');
+
+});
+
+
 
 
 require __DIR__.'/auth.php';
