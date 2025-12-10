@@ -7,7 +7,7 @@
 <body class="bg-pink-50">
 
     <div class="flex">
-        <!-- Sidebar -->
+       
         <aside class="w-64 bg-pink-200 h-screen p-4">
             <h2 class="text-xl font-bold mb-4">SweetCake Seller</h2>
 
@@ -22,7 +22,7 @@
             </ul>
         </aside>
 
-        <!-- Main Content -->
+    
         <main class="flex-1 p-6">
             @yield('content')
         </main>
