@@ -58,6 +58,8 @@ Route::prefix('seller')->name('seller.')->group(function () {
         return view('seller.products.index');
     })->name('products.index');
 
+    Route::resource('categories', App\Http\Controllers\Seller\CategoryController::class);
+
 });
 
 //tambah fitur : seller order
