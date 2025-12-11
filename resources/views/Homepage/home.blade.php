@@ -91,12 +91,9 @@
                 Explore Products
             </a>
         </div>
-        <img src="{{ asset('image/cake 1.jpg') }}"
-     style="width: 300px; height: 200px; object-fit: cover;"
-     class="rounded-xl drop-shadow-xl">
-    </div>
 
-
+        <img src="{{ asset('image/home.png') }}"
+             class="rounded-xl drop-shadow-xl w-full h-80 object-cover">
     </div>
 </section>
 <!-- ================= ALL PRODUCTS ================= -->
@@ -109,25 +106,47 @@
         Fresh, Sweet, and Made With Love
     </p>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-        <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
-            <img src="{{ asset('image/cake 2.jpg') }}" class="w-full h-40 object-cover rounded-lg mb-3">
-            <h3 class="font-semibold">Birthday Cake</h3>
-        </div>
-        <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
-            <img src="{{ asset('image/Cookies 1.jpeg') }}" class="w-full h-40 object-cover rounded-lg mb-3">
-            <h3 class="font-semibold">Cookies</h3>
-        </div>
-        <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
-            <img src="{{ asset('image/Cupcake 1.jpeg') }}" class="w-full h-40 object-cover rounded-lg mb-3">
-            <h3 class="font-semibold">Cupcake</h3>
-        </div>
-        <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
-            <img src="{{ asset('image/Pastry 1.jpeg') }}" class="w-full h-40 object-cover rounded-lg mb-3">
-            <h3 class="font-semibold">Pastry</h3>
-    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 mt-10">
+
+        {{-- Category 1 --}}
+        <a href="category" class="block">
+            <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
+                <img src="{{ asset('image/cake 2.jpg') }}"
+                     class="w-full h-40 object-cover rounded-lg mb-3">
+                <h3 class="font-semibold">Birthday Cake</h3>
+            </div>
+        </a>
+
+        {{-- Category 2 --}}
+        <a href="#" class="block">
+            <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
+                <img src="{{ asset('image/Cookies 1.jpeg') }}"
+                     class="w-full h-40 object-cover rounded-lg mb-3">
+                <h3 class="font-semibold">Cookies</h3>
+            </div>
+        </a>
+
+        {{-- Category 3 --}}
+        <a href="#" class="block">
+            <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
+                <img src="{{ asset('image/Cupcake 1.jpeg') }}"
+                     class="w-full h-40 object-cover rounded-lg mb-3">
+                <h3 class="font-semibold">Cupcake</h3>
+            </div>
+        </a>
+
+        {{-- Category 4 --}}
+        <a href="#" class="block">
+            <div class="text-center bg-white p-4 rounded-xl shadow hover:scale-105 duration-300 cursor-pointer">
+                <img src="{{ asset('image/Pastry 1.jpeg') }}"
+                     class="w-full h-40 object-cover rounded-lg mb-3">
+                <h3 class="font-semibold">Pastry</h3>
+            </div>
+        </a>
+
     </div>
 </section>
+
 <!-- ================= FOOTER ================= -->
 <footer class="w-full bg-pink-200 py-10 mt-16">
     <div class="max-w-6xl mx-auto text-center">

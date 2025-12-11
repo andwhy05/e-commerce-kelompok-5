@@ -1,79 +1,43 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/category/{slug}', [ProductController::class, 'byCategory'])->name('products.by-category');
-Route::get('/products/{id}', [ProductController::class, 'detail'])->name('products.detail');
+// Category
+Route::get('/category/{slug}', [ProductCategoryController::class, 'show'])->name('category.show');
 
-// Checkout
-Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
-Route::post('/checkout/process', [CheckoutController::class, 'process'])->middleware('auth');
-Route::get('/checkout/{id}/success', [CheckoutController::class, 'success'])->name('checkout.success');
+// Product Detail
+Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 
-// Upload gambar produk
-Route::post('/products/{product}/images', 
-    [ProductController::class, 'storeImage'])
-    ->name('products.images.store');
+// Cart
+Route::post('/cart/add/{product}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/cart/update/{product}', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-// Profile
+// Checkout + Transaction (auth)
 Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get('/transaction/{id}', [TransactionController::class, 'show'])->name('transaction.show');
+    Route::get('/transaction/{id}/success', [TransactionController::class, 'success'])->name('transaction.success');
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    }
-);
-Route::get('/profile', function () {
-    return view('profile'); // buat halaman ini nanti
-})->name('profile')->middleware('auth');
-
-// tambah keranjang : 
-Route::post('/cart/add/{id}', function() {
-    return back()->with('success', 'Produk ditambahkan ke keranjang (dummy)');
-})->name('cart.add');
-
-// tambahan fitur :
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-// tambah fitur untuk Seller
-Route::prefix('seller')->name('seller.')->group(function () {
-    
-    // Dashboard
-    Route::get('/dashboard', function () {
-        return view('seller.dashboard');
-    })->name('dashboard');
-
-    // Registrasi Toko
-    Route::get('/register', function () {
-        return view('seller.register');
-    })->name('register');
-
-    // Manajemen Produk
-    Route::get('/products', function () {
-        return view('seller.products.index');
-    })->name('products.index');
-
-    Route::resource('categories', App\Http\Controllers\Seller\CategoryController::class);
-
 });
 
-// Keranjang dummy
-Route::post('/cart/add/{id}', function() {
-    return back()->with('success', 'Produk ditambahkan ke keranjang (dummy)');
-})->name('cart.add');
-
-// Route auth
 require __DIR__.'/auth.php';
+

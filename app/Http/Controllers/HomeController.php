@@ -10,17 +10,22 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $categoryId = $request->category;
+        $query = Product::with('images', 'category');
 
-        $products = Product::with('images')
-            ->when($categoryId, function ($query) use ($categoryId) {
-                $query->where('product_category_id', $categoryId);
-            })
-            ->latest()
-            ->get();
+        // Filter kategori
+        if ($request->category) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Search
+        if ($request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->latest()->get();
 
         $categories = ProductCategory::all();
 
         return view('Homepage.home', compact('products', 'categories'));
     }
-} // end class
+}
