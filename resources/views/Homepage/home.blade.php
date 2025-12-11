@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>SweetCake | Home</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    {{-- Font Awesome --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
     <style>
         body {
@@ -16,6 +21,8 @@
             font-family: 'Parisienne', cursive;
         }
     </style>
+
+
 </head>
 
 
@@ -53,37 +60,61 @@
             </nav>
 
 
-            <!-- Icons (Right) -->
-            <a href="{{ route('profile')}}">
+            <!-- Icons User(Right) -->
+            {{-- <a href="{{ route('profile')}}">
                 <div class="flex items-center text-pink-600 text-2xl space-x-6">
                     <i class="fas fa-user hover:text-pink-400 cursor-pointer transition"></i>
                 </div>
-            </a>
+            </a> --}}
+
+            <!-- ICON USER -->
+        <div class="flex items-center text-pink-600 text-2xl space-x-6">
+
+            @auth
+                <a href="{{ route('profile.edit') }}"
+                   class="hover:text-pink-400 transition"
+                   title="Profile">
+                    <i class="fas fa-user"></i>
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                   class="hover:text-pink-400 transition"
+                   title="Login">
+                    <i class="fas fa-user"></i>
+                </a>
+            @endauth
+
+        </div>
 
             <!-- MOBILE ICON -->
             <div class="md:hidden text-2xl text-pink-700">
                 <i class="fas fa-bars"></i>
             </div>
-        </div>
-    </header>
+
+    </div>
+
+</header>
 
     <section id="home" class="pt-32 pb-20">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
-            <div class="text-left">
-                <h1 class="text-5xl md:text-6xl font-bold text-pink-700 leading-tight text-left">
-                    Fresh <span class="text-pink-500">Cakes</span> Everyday
+            <div>
+                <h1 class="text-5xl md:text-6xl font-bold text-pink-700 leading-tight">
+                    Fresh <span class="text-pink-500">Cakes</span> Everyday 🍰
                 </h1>
-                <p class="text-pink-700 mt-4 text-lg leading-relaxed text-left">
-                    SweetCake menyediakan kue-kue lembut dan manis yang dibuat setiap hari.
-                    Dari aroma hingga rasa, semuanya dibuat untuk membuat harimu lebih ceria.
+                <p class="text-pink-700 mt-4 text-lg">
+                    Kue dibuat setiap hari dengan bahan premium, rasa lembut, dan tampilan elegan.
                 </p>
                 <a href="#products"
-                    class="inline-block mt-6 bg-pink-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-600 transition">
+                class="inline-block mt-6 bg-pink-500 text-white px-8 py-3 rounded-full shadow-lg hover:bg-pink-600 transition">
                     Explore Products
                 </a>
             </div>
 
+            <div>
+                <img src="https://via.placeholder.com/500x400?text=Sweet+Cake"
+                 class="w-full drop-shadow-xl rounded-xl">
+            </div>
             {{-- <div>
                 <img src="https://pin.it/7m08oN0db.png" class="w-full drop-shadow-xl">
             </div> --}}
