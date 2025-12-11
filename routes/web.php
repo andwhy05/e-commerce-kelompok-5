@@ -7,22 +7,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 
-use App\Http\Controllers\Seller\SellerDashboardController;
-use App\Http\Controllers\Seller\ProductCategoryController;
-use App\Http\Controllers\Seller\ProductController;
-use App\Http\Controllers\Seller\OrderController;
-// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
-
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-
-//ini dibuat agar halaman welcome tidak bisa diakses kalo user belum login
-// Route::get('/', function () {
-//     return view('welcome');
-// }) ->middleware('auth') ;
-
-// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
+// Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -82,25 +70,10 @@ Route::prefix('seller')->name('seller.')->group(function () {
 
 });
 
-
+// Keranjang dummy
 Route::post('/cart/add/{id}', function() {
     return back()->with('success', 'Produk ditambahkan ke keranjang (dummy)');
 })->name('cart.add');
 
 // Route auth
-// =======
-//tambah fitur : seller order
-Route::middleware(['auth', 'seller'])->prefix('seller')->name('seller.')->group(function () {
-
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
-    Route::post('/orders/{id}/update-resi', [OrderController::class, 'updateResi'])->name('orders.update-resi');
-
-});
-
-
-
-
-// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
 require __DIR__.'/auth.php';

@@ -41,8 +41,8 @@ class CheckoutController extends Controller
         return redirect()->route('home')->with('success', 'Pembelian berhasil!');
     }
 }
-<<<<<<< HEAD
-} 
-=======
-}
->>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
+// <<<<<<< HEAD
+// } 
+// =======
+// }
+// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
