@@ -23,4 +23,4 @@ class HomeController extends Controller
 
         return view('Homepage.home', compact('products', 'categories'));
     }
-} 
+} // end class

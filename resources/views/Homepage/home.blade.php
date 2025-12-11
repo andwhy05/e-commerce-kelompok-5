@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SweetCake | Home</title>
+<<<<<<< HEAD
 
     {{-- Tailwind --}}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -139,3 +140,162 @@
 </footer>
 </body>
 </html>
+=======
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .logo-font {
+            font-family: 'Parisienne', cursive;
+        }
+    </style>
+</head>
+
+
+<body class="bg-pink-50">
+
+    <!-- NAVBAR / HEADER -->
+    <header class="fixed top-0 w-full z-50 bg-pink-700/30 backdrop-blur-lg shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+            <!-- LOGO -->
+            {{-- <h1 class="text-3xl font-bold text-pink-600 tracking-wide">
+                SweetCake<span class="text-pink-400">.</span>
+            </h1> --}}
+
+             <h1 class="text-5xl font-bold text-pink-600 logo-font tracking-wide">
+                SweetCake
+            </h1>
+
+             <!-- Search Bar (Center) -->
+            <div class="hidden md:flex items-center w-1/3 bg-pink-50 border border-pink-200 rounded-full px-4 py-2 shadow-sm">
+                <i class="fas fa-search text-pink-400"></i>
+                <input 
+                    type="text" 
+                    placeholder="Cari kue favoritmu..." 
+                    class="w-full bg-transparent focus:outline-none px-3 text-pink-700"
+                >
+            </div>
+
+            
+            <!-- NAVIGATION -->
+            <nav class="hidden md:flex space-x-8 font-semibold text-pink-800">
+                <a href="#home" class="hover:text-pink-500 transition">Home</a>
+                <a href="#products" class="hover:text-pink-500 transition">Produk</a>
+                <a href="#cart" class="hover:text-pink-500 transition">Keranjang</a>
+            </nav>
+
+
+            <!-- Icons (Right) -->
+            <a href="{{ route('profile')}}">
+                <div class="flex items-center text-pink-600 text-2xl space-x-6">
+                    <i class="fas fa-user hover:text-pink-400 cursor-pointer transition"></i>
+                </div>
+            </a>
+
+            <!-- MOBILE ICON -->
+            <div class="md:hidden text-2xl text-pink-700">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+
+            <div class="text-left">
+                <h1 class="text-5xl md:text-6xl font-bold text-pink-700 leading-tight text-left">
+                    Fresh <span class="text-pink-500">Cakes</span> Everyday
+                </h1>
+                <p class="text-pink-700 mt-4 text-lg leading-relaxed text-left">
+                    SweetCake menyediakan kue-kue lembut dan manis yang dibuat setiap hari.
+                    Dari aroma hingga rasa, semuanya dibuat untuk membuat harimu lebih ceria.
+                </p>
+                <a href="#products"
+                    class="inline-block mt-6 bg-pink-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-600 transition">
+                    Explore Products
+                </a>
+            </div>
+
+            {{-- <div>
+                <img src="https://pin.it/7m08oN0db.png" class="w-full drop-shadow-xl">
+            </div> --}}
+
+        </div>
+    </section>
+
+
+    <!-- ALL PRODUCTS SECTION -->
+    <section id="products" class="py-20 bg-white">
+        <h2 class="text-center text-4xl font-bold text-pink-700">
+            All <span class="text-pink-500">Products</span>
+        </h2>
+        <p class="text-center text-pink-600 mt-2">Fresh, Sweet, and Made With Love</p>
+
+        <div class="grid gap-10 mt-12 max-w-7xl mx-auto px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            @foreach($products as $product)
+            <div class="bg-pink-50 rounded-2xl shadow-md hover:shadow-xl transition p-4">
+                <img src="{{ $product->image }}" class="h-44 w-full object-cover rounded-xl">
+                <h3 class="text-xl font-semibold text-pink-800 mt-4">{{ $product->name }}</h3>
+                <p class="text-pink-600 text-sm mt-1 h-12">{{ $product->description }}</p>
+                <p class="text-pink-700 font-bold mt-2">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                <a href="{{ route('add.to.cart', $product->id) }}"
+   class="mt-4 w-full block text-center bg-pink-500 text-white py-2 rounded-full hover:bg-pink-600 transition">
+    Add to Cart
+</a>
+
+                {{-- <button class="mt-4 w-full bg-pink-500 text-white py-2 rounded-full hover:bg-pink-600 transition"> --}}
+                    {{-- Add to Cart --}}
+                {{-- </button> --}}
+            </div>
+            @endforeach
+        </div>
+    </section>
+
+
+    <!-- CATEGORY SECTION -->
+    <section id="categories" class="py-20 bg-pink-50">
+        <h2 class="text-center text-4xl font-bold text-pink-700">
+            Product <span class="text-pink-500">Categories</span>
+        </h2>
+
+        <div class="max-w-7xl mx-auto px-6 mt-14 space-y-16">
+            @foreach($categories as $category)
+            <div>
+                <h3 class="text-3xl font-bold text-pink-700 mb-6">{{ $category->name }}</h3>
+                <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    @foreach($category->products as $product)
+                    <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition p-4">
+                        <img src="{{ $product->image }}" class="h-40 w-full object-cover rounded-xl">
+                        <h4 class="text-lg font-semibold text-pink-800 mt-3">{{ $product->name }}</h4>
+                        <p class="text-pink-600 text-sm h-12">{{ $product->description }}</p>
+                        <p class="font-bold text-pink-700 mt-2">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="bg-pink-200 py-10 mt-16">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-3xl font-bold text-pink-700">SweetCake.</h1>
+            <p class="text-pink-700 mt-2">Made with love and sweetness</p>
+            <p class="mt-6 text-pink-800">&copy; 2025 SweetCake — All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</body>
+</html>
+
+
+
+>>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
