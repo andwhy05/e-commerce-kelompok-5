@@ -4,24 +4,44 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CheckoutController;
+
 use App\Http\Controllers\Seller\SellerDashboardController;
 use App\Http\Controllers\Seller\ProductCategoryController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\OrderController;
+// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Homepage
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 
 //ini dibuat agar halaman welcome tidak bisa diakses kalo user belum login
 // Route::get('/', function () {
 //     return view('welcome');
 // }) ->middleware('auth') ;
 
+// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/category/{slug}', [ProductController::class, 'byCategory'])->name('products.by-category');
+Route::get('/products/{id}', [ProductController::class, 'detail'])->name('products.detail');
 
+// Checkout
+Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+Route::post('/checkout/process', [CheckoutController::class, 'process'])->middleware('auth');
+Route::get('/checkout/{id}/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
+// Upload gambar produk
+Route::post('/products/{product}/images', 
+    [ProductController::class, 'storeImage'])
+    ->name('products.images.store');
+
+// Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -62,6 +82,13 @@ Route::prefix('seller')->name('seller.')->group(function () {
 
 });
 
+
+Route::post('/cart/add/{id}', function() {
+    return back()->with('success', 'Produk ditambahkan ke keranjang (dummy)');
+})->name('cart.add');
+
+// Route auth
+// =======
 //tambah fitur : seller order
 Route::middleware(['auth', 'seller'])->prefix('seller')->name('seller.')->group(function () {
 
@@ -75,4 +102,5 @@ Route::middleware(['auth', 'seller'])->prefix('seller')->name('seller.')->group(
 
 
 
+// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
 require __DIR__.'/auth.php';

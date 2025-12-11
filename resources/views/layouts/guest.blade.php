@@ -45,7 +45,10 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+<<<<<<< HEAD
+=======
         
+>>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
     </head>
     <!-- Background Gradasi Lembut (nuansa kue krim/es krim) -->
     <body class="font-['Inter'] text-gray-900 antialiased">
