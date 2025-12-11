@@ -1,29 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto p-6">
+<div class="max-w-3xl mx-auto p-6">
+    <h1 class="text-3xl font-bold text-pink-700 mb-4">Checkout</h1>
 
-    {{-- Search Bar --}}
-    <form method="GET" action="{{ route('products.index') }}" class="mb-6">
-        <input type="text" name="search" placeholder="Cari produk..." 
-            class="w-full px-4 py-2 border rounded-lg"
-            value="{{ request('search') }}">
-    </form>
+    <div class="bg-white shadow p-5 rounded-xl">
 
-    <h2 class="text-3xl font-bold mb-4">Semua Produk</h2>
+        <h2 class="text-xl font-bold">{{ $product->name }}</h2>
+        <p class="text-pink-600 font-bold">Rp {{ number_format($product->price) }}</p>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        @foreach ($products as $product)
-            <a href="{{ route('products.detail', $product->id) }}" 
-               class="bg-white p-4 shadow rounded-xl hover:scale-105 duration-300">
+        <form action="{{ route('checkout.process') }}" method="POST" class="mt-5">
+            @csrf
 
-                <img src="{{ asset('image/'.$product->images[0]->image_path) }}" 
-                     class="w-full h-40 object-cover rounded-lg mb-3">
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                <h3 class="font-semibold">{{ $product->name }}</h3>
-                <p class="text-pink-600 text-sm">Rp {{ number_format($product->price) }}</p>
-            </a>
-        @endforeach
+            <label class="font-semibold">Alamat Pengiriman</label>
+            <textarea name="address" class="w-full border p-2 rounded mt-2"></textarea>
+
+            <label class="font-semibold mt-4 block">Jenis Pengiriman</label>
+            <select name="shipping" class="w-full border p-2 rounded mt-2">
+                <option value="regular">Reguler</option>
+                <option value="express">Express</option>
+            </select>
+
+            <button class="mt-5 w-full bg-pink-500 text-white py-3 rounded-xl">
+                Bayar Sekarang
+            </button>
+        </form>
+
     </div>
-</div> 
+</div>
 @endsection

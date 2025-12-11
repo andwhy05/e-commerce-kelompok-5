@@ -5,12 +5,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Store\StoreController;
-
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Seller\SellerDashboardController;
-use App\Http\Controllers\Seller\ProductCategoryController;
+use App\Http\Controllers\Store\ProductCategoryController;
 use App\Http\Controllers\Seller\OrderController;
 use App\Http\Controllers\Seller\CategoryController;
 
@@ -35,11 +36,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 // Homepage
 Route::get('/', [HomeController::class, 'index']);
 
+// Category
+Route::get('/category/{slug}', [ProductCategoryController::class, 'show'])->name('category.show');
 
-//ini dibuat agar halaman welcome tidak bisa diakses kalo user belum login
-// Route::get('/', function () {
-//     return view('welcome');
-// }) ->middleware('auth') ;
+// Product Detail
+Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 
 
 Route::get('/dashboard', function () {
@@ -49,19 +50,16 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/category/{slug}', [ProductController::class, 'byCategory'])->name('products.by-category');
 Route::get('/products/{id}', [ProductController::class, 'detail'])->name('products.detail');
 
-// Checkout
-Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
-Route::post('/checkout/process', [CheckoutController::class, 'process'])->middleware('auth');
-Route::get('/checkout/{id}/success', [CheckoutController::class, 'success'])->name('checkout.success');
-
-// Upload gambar produk
-Route::post('/products/{product}/images', 
-    [ProductController::class, 'storeImage'])
-    ->name('products.images.store');
-
-// Profile
+// Checkout + Transaction (auth)
 Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get('/transaction/{id}', [TransactionController::class, 'show'])->name('transaction.show');
+    Route::get('/transaction/{id}/success', [TransactionController::class, 'success'])->name('transaction.success');
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -121,3 +119,4 @@ Route::middleware('auth')->prefix('store')->name('store.')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
