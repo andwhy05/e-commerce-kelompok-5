@@ -126,11 +126,5 @@
                 Daftar di sini
             </a>
         </p>
-
     </div>
-<<<<<<< HEAD
 </x-guest-layout>
-=======
-</x-guest-layout>
-
->>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542

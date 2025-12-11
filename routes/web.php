@@ -2,19 +2,38 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Store\StoreController;
 
 use App\Http\Controllers\Seller\SellerDashboardController;
 use App\Http\Controllers\Seller\ProductCategoryController;
-use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\OrderController;
-// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
+use App\Http\Controllers\Seller\CategoryController;
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    
+    // Verifikasi Toko
+    Route::get('/store-verification', [AdminController::class, 'storeVerification'])->name('store.verification');
+    Route::post('/store/{id}/approve', [AdminController::class, 'approveStore'])->name('store.approve');
+    Route::delete('/store/{id}/reject', [AdminController::class, 'rejectStore'])->name('store.reject');
+    
+    // Manajemen User
+    Route::get('/users', [AdminController::class, 'userManagement'])->name('users');
+    Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('users.delete');
+    
+    // Manajemen Toko
+    Route::get('/stores', [AdminController::class, 'storeManagement'])->name('stores');
+    Route::delete('/stores/{id}', [AdminController::class, 'deleteStore'])->name('stores.delete');
+    Route::post('/stores/{id}/toggle', [AdminController::class, 'toggleStoreVerification'])->name('stores.toggle');
+});
 
 // Homepage
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index']);
 
 
 //ini dibuat agar halaman welcome tidak bisa diakses kalo user belum login
@@ -22,7 +41,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 //     return view('welcome');
 // }) ->middleware('auth') ;
 
-// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -78,7 +97,7 @@ Route::prefix('seller')->name('seller.')->group(function () {
         return view('seller.products.index');
     })->name('products.index');
 
-    Route::resource('categories', App\Http\Controllers\Seller\CategoryController::class);
+    // Route::resource('categories', App\Http\Controllers\Seller\CategoryController::class);
 
 });
 
@@ -87,20 +106,18 @@ Route::post('/cart/add/{id}', function() {
     return back()->with('success', 'Produk ditambahkan ke keranjang (dummy)');
 })->name('cart.add');
 
-// Route auth
-// =======
-//tambah fitur : seller order
-Route::middleware(['auth', 'seller'])->prefix('seller')->name('seller.')->group(function () {
 
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
-    Route::post('/orders/{id}/update-resi', [OrderController::class, 'updateResi'])->name('orders.update-resi');
-
+// Routes untuk Store (Seller)
+Route::middleware('auth')->prefix('store')->name('store.')->group(function () {
+    // Registrasi Toko
+    Route::get('/create', [StoreController::class, 'create'])->name('create');
+    Route::post('/create', [StoreController::class, 'store'])->name('store');
+    
+    // Dashboard & Management
+    Route::get('/dashboard', [StoreController::class, 'dashboard'])->name('dashboard');
+    Route::get('/pending', [StoreController::class, 'pending'])->name('pending');
+    Route::get('/edit', [StoreController::class, 'edit'])->name('edit');
+    Route::put('/update', [StoreController::class, 'update'])->name('update');
 });
 
-
-
-
-// >>>>>>> 5f24dfacd3d5dea8fab3c85ad374ae9a9570c542
 require __DIR__.'/auth.php';
